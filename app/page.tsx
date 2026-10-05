@@ -1,78 +1,82 @@
-import { supabase } from "@/lib/supabase";
-
-export const dynamic = "force-dynamic";
+import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
-    const { data: books, error } = await supabase.from("books").select("*");
-
-    if (error) {
-        return <p style={{ padding: 24 }}>Error loading data: {error.message}</p>;
-    }
+    const supabase = await createClient();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
     return (
         <main
             style={{
                 minHeight: "100vh",
-                background: "#f6f4fb",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
                 fontFamily: "system-ui, sans-serif",
-                color: "#222",
-                padding: "48px 24px",
+                padding: 24,
             }}
         >
-            <div style={{ maxWidth: 640, margin: "0 auto" }}>
-                <h1 style={{ fontSize: 32, margin: 0 }}>Books</h1>
-                <p style={{ color: "#666", margin: "6px 0 28px" }}>
-                    {books?.length ?? 0} books on the list
+            <div
+                style={{
+                    background: "white",
+                    borderRadius: 16,
+                    padding: "48px 40px",
+                    boxShadow: "0 20px 40px rgba(0,0,0,0.2)",
+                    maxWidth: 440,
+                    textAlign: "center",
+                }}
+            >
+                <h1 style={{ margin: "0 0 12px", fontSize: 32, color: "#2d2d2d" }}>
+                    NYC Meme Generator
+                </h1>
+                <p style={{ margin: "0 0 28px", color: "#555", fontSize: 16, lineHeight: 1.5 }}>
+                    Turn any New York moment into a meme, then see what everyone else made.
                 </p>
 
-                <ul
-                    style={{
-                        listStyle: "none",
-                        padding: 0,
-                        margin: 0,
-                        display: "grid",
-                        gap: 12,
-                    }}
-                >
-                    {books?.map((book) => (
-                        <li
-                            key={book.id}
+                <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    <Link
+                        href="/generate"
+                        style={{
+                            background: "#764ba2",
+                            color: "white",
+                            padding: "12px 20px",
+                            borderRadius: 8,
+                            textDecoration: "none",
+                            fontWeight: 600,
+                        }}
+                    >
+                        Make a meme
+                    </Link>
+                    <Link
+                        href="/feed"
+                        style={{
+                            background: "#f1edf7",
+                            color: "#4a3a63",
+                            padding: "12px 20px",
+                            borderRadius: 8,
+                            textDecoration: "none",
+                            fontWeight: 600,
+                        }}
+                    >
+                        See the feed
+                    </Link>
+                    {!user && (
+                        <Link
+                            href="/login"
                             style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: 16,
-                                padding: 16,
-                                background: "#fff",
-                                border: "1px solid #e6e2f0",
-                                borderRadius: 12,
+                                color: "#764ba2",
+                                fontSize: 14,
+                                marginTop: 4,
+                                textDecoration: "underline",
                             }}
                         >
-                            <div
-                                style={{
-                                    width: 44,
-                                    height: 60,
-                                    borderRadius: 6,
-                                    background: "#7c5cbf",
-                                    color: "#fff",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    fontWeight: 700,
-                                    fontSize: 20,
-                                    flexShrink: 0,
-                                }}
-                            >
-                                {book.title.charAt(0)}
-                            </div>
-                            <div>
-                                <div style={{ fontSize: 18, fontWeight: 600 }}>{book.title}</div>
-                                <div style={{ fontSize: 14, color: "#666", marginTop: 2 }}>
-                                    {book.author}
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                            Log in with Google
+                        </Link>
+                    )}
+                </div>
             </div>
         </main>
     );
