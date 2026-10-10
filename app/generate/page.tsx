@@ -5,7 +5,7 @@ import { useState } from "react";
 const TEMPLATES = [
     { id: "drake", label: "Drake", src: "/memes/drake.jpg" },
     { id: "distracted", label: "Distracted Boyfriend", src: "/memes/distracted.jpg" },
-    { id: "button", label: "Two Buttons", src: "/memes/button.jpg" },
+    { id: "onedoesnot", label: "One Does Not Simply", src: "/memes/onedoesnot.jpg" },
 ];
 
 export default function GeneratePage() {
@@ -144,14 +144,17 @@ function memeTextStyle(pos: "top" | "bottom"): React.CSSProperties {
         position: "absolute",
         left: 0,
         right: 0,
-        [pos]: 10,
+        [pos]: 14,
         textAlign: "center",
         color: "white",
-        fontWeight: 800,
-        fontSize: 22,
+        fontFamily: "'Arial Black', Impact, sans-serif",
+        fontWeight: 900,
+        fontSize: 28,
+        letterSpacing: "0.5px",
+        textTransform: "uppercase",
         textShadow:
-            "2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000",
-        padding: "0 10px",
-        lineHeight: 1.2,
+            "3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000, 0 0 8px rgba(0,0,0,0.5)",
+        padding: "0 14px",
+        lineHeight: 1.15,
     } as React.CSSProperties;
 }

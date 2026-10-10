@@ -5,7 +5,7 @@ import VoteButtons from "./VoteButtons";
 const TEMPLATE_SRC: Record<string, string> = {
     drake: "/memes/drake.jpg",
     distracted: "/memes/distracted.jpg",
-    button: "/memes/button.jpg",
+    onedoesnot: "/memes/onedoesnot.jpg",
 };
 
 export const dynamic = "force-dynamic";
